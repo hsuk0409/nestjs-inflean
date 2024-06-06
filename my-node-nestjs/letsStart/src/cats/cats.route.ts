@@ -20,6 +20,28 @@ router.get("/cats", (req, res) => {
   }
 });
 
+router.get("/cats/:id", (req, res) => {
+  try {
+    const params = req.params;
+    console.log(params);
+    const cats = Cat;
+    const cat = cats.find((cat) => {
+      return cat.id === params.id;
+    });
+    res.status(200).send({
+      success: true,
+      data: {
+        cat,
+      },
+    });
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      error: err.message,
+    });
+  }
+});
+
 router.post("/cats", (req, res) => {
   try {
     const data = req.body;
